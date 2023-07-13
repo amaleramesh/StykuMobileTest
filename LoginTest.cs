@@ -10,9 +10,7 @@ namespace StykuMobileTest
     {
         public AppiumDriver<AndroidElement> driver;
 
-
         [SetUp]
-
         public void Setup()
         {
             string apkFilePath = new FileInfo($"{Path.GetTempPath()}/app-release.apk").FullName;
