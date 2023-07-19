@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 
 namespace StykuMobileTest
 {
-    public class Forgot_Password
+    public class ForgotPasswordTest
     {
         public AppiumDriver<AndroidElement> driver;
 
