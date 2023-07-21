@@ -8,13 +8,15 @@ namespace StykuMobileTest
     {
         public required AppiumDriver<AndroidElement> driver;
         
-        public void Appiumsetup()
+        public void AppiumSetup()
         {
             string apkFilePath = new FileInfo($"{Path.GetTempPath()}/app-release.apk").FullName;
-            AppiumOptions capabilities = new AppiumOptions();
+
+            AppiumOptions capabilities = new();
             capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.Appium);
             capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, StringResources.DEVICE_NAME);
             capabilities.AddAdditionalCapability(MobileCapabilityType.App, apkFilePath);
+
             driver = new AndroidDriver<AndroidElement>(new Uri(StringResources.APPIUM_SERVER_URL), capabilities);
         }
     }

@@ -1,67 +1,54 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Appium.Enums;
-
 
 namespace StykuMobileTest
 {
-    public class LoginTest
+    public class LoginTest : Caps
     {
-        public AppiumDriver<AndroidElement> driver;
 
         [SetUp]
         public void Setup()
         {
-            string apkFilePath = new FileInfo($"{Path.GetTempPath()}/app-release.apk").FullName;
-            AppiumOptions capabilities = new AppiumOptions();
-            capabilities.AddAdditionalCapability(MobileCapabilityType.AutomationName, AutomationName.Appium);
-            capabilities.AddAdditionalCapability(MobileCapabilityType.DeviceName, StringResources.DEVICE_NAME);
-            capabilities.AddAdditionalCapability(MobileCapabilityType.App, apkFilePath);
-            driver = new AndroidDriver<AndroidElement>(new Uri(StringResources.APPIUM_SERVER_URL), capabilities);
+            AppiumSetup();
         }
 
         [Test]
-        public void TestLoginSucess()
+        public void TestLoginSuccess()
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            // Enter button on HomePage
 
-            AndroidElement ebutton = GetWebElement("android.widget.Button");
-            ebutton.Click();
+            // Enter button on homepage
+            AndroidElement eButton = GetWebElement("android.widget.Button");
+            eButton.Click();
 
-            // Enter email Id on Welcome button
-            AndroidElement emailinputBox = GetWebElement("android.widget.EditText");
-            emailinputBox.Click();
-            emailinputBox.SendKeys(StringResources.EMAIL_ID);
+            // Enter email Id on welcome button
+            AndroidElement emailInputBox = GetWebElement("android.widget.EditText");
+            emailInputBox.Click();
+            emailInputBox.SendKeys(StringResources.EMAIL_ID);
             driver.HideKeyboard();
 
-
             // Click on email continue button
-            By emailcontinuebutton = By.XPath("//android.widget.Button[@content-desc=\"Continue\"]");
-            AndroidElement cbutton = driver.FindElement(emailcontinuebutton);
+            By emailContinueButton = By.XPath("//android.widget.Button[@content-desc=\"Continue\"]");
+            AndroidElement cbutton = driver.FindElement(emailContinueButton);
             cbutton.Click();
 
-            // Enter Password
-            AndroidElement passwordinputBox = GetWebElement("android.widget.EditText");
-            passwordinputBox.Click();
-            passwordinputBox.SendKeys(StringResources.PASSWORD);
+            // Enter password
+            AndroidElement passwordInputBox = GetWebElement("android.widget.EditText");
+            passwordInputBox.Click();
+            passwordInputBox.SendKeys(StringResources.PASSWORD);
             driver.HideKeyboard();
 
             // Click on toggle button
-
-            AndroidElement tbutton = GetWebElementusingxpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.Switch");
-            tbutton.Click();
+            AndroidElement toogleButton = GetWebElementusingxpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.Switch");
+            toogleButton.Click();
 
             // Click on password continue button
+            AndroidElement passwordButton = GetWebElementusingxpath("//android.widget.Button[@content-desc=\"Continue\"]");
+            passwordButton.Click();
 
-            AndroidElement pbutton = GetWebElementusingxpath("//android.widget.Button[@content-desc=\"Continue\"]");
-            pbutton.Click();
-
-            // Click on Skip button
-            AndroidElement sbutton = GetWebElementusingxpath("//android.widget.Button[@content-desc=\"Skip\"]");
-            sbutton.Click();
-            driver.Quit();
+            // Click on skip button
+            AndroidElement sButton = GetWebElementusingxpath("//android.widget.Button[@content-desc=\"Skip\"]");
+            sButton.Click();
 
         }
 
@@ -70,78 +57,70 @@ namespace StykuMobileTest
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-            AndroidElement ebutton = GetWebElement("android.widget.Button");
-            ebutton.Click();
+            AndroidElement eButton = GetWebElement("android.widget.Button");
+            eButton.Click();
 
-            AndroidElement emailinputBox = GetWebElement("android.widget.EditText");
-            emailinputBox.Click();
+            AndroidElement emailInputBox = GetWebElement("android.widget.EditText");
+            emailInputBox.Click();
 
-            emailinputBox.SendKeys(StringResources.INVALID_EMAIL_ID);
+            emailInputBox.SendKeys(StringResources.INVALID_EMAIL_ID);
 
             driver.HideKeyboard();
 
             AndroidElement element = driver.FindElementByXPath("//android.view.View[@content-desc=\"Please enter a valid email format\"]");
-
-            // Get the value of the content-desc attribute
-            string Actresult = element.GetAttribute("content-desc");
-            string Eepresult = StringResources.EMAIL_VALIDATION_MESSAGE;
-            Assert.That(Actresult, Is.EqualTo(Eepresult));
+            string actResult = element.GetAttribute("content-desc");
+            string expResult = StringResources.EMAIL_VALIDATION_MESSAGE;
+            Assert.That(actResult, Is.EqualTo(expResult));
             driver.Quit();
 
         }
 
         [Test]
-        public void TestLoginWithInvaliPassword()
+        public void TestLoginWithInvalidPassword()
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-            AndroidElement ebutton = GetWebElement("android.widget.Button");
-            ebutton.Click();
+            AndroidElement eButton = GetWebElement("android.widget.Button");
+            eButton.Click();
 
-            AndroidElement emailinputBox = GetWebElement("android.widget.EditText");
-            emailinputBox.Click();
-
-            emailinputBox.SendKeys(StringResources.EMAIL_ID);
-
+            AndroidElement emailInputBox = GetWebElement("android.widget.EditText");
+            emailInputBox.Click();
+            emailInputBox.SendKeys(StringResources.EMAIL_ID);
             driver.HideKeyboard();
 
-            // Click on email continue button
-            By emailcontinuebutton = By.XPath("//android.widget.Button[@content-desc=\"Continue\"]");
-            AndroidElement cbutton = driver.FindElement(emailcontinuebutton);
+            By emailContinueButton = By.XPath("//android.widget.Button[@content-desc=\"Continue\"]");
+            AndroidElement cbutton = driver.FindElement(emailContinueButton);
             cbutton.Click();
 
-            // Enter Password
-            AndroidElement passwordinputBox = GetWebElement("android.widget.EditText");
-            passwordinputBox.Click();
-            passwordinputBox.SendKeys(StringResources.INVALID_PASSWORD);
+            AndroidElement passwordInputBox = GetWebElement("android.widget.EditText");
+            passwordInputBox.Click();
+            passwordInputBox.SendKeys(StringResources.INVALID_PASSWORD);
             driver.HideKeyboard();
 
-            // Click on password continue button
-
-            AndroidElement pbutton = GetWebElementusingxpath("//android.widget.Button[@content-desc=\"Continue\"]");
-            pbutton.Click();
-
+            AndroidElement passwordButton = GetWebElementusingxpath("//android.widget.Button[@content-desc=\"Continue\"]");
+            passwordButton.Click();
             AndroidElement element = driver.FindElementByXPath("/hierarchy/android.widget.Toast");
 
-            // Get the value of the content-desc attribute
-            string Actresult = element.GetAttribute("text");
-            string Eepresult = StringResources.INVALID_PASSWORD_MESSAGE;
-            Assert.That(Actresult, Is.EqualTo(Eepresult));
+            string actResult = element.GetAttribute("text");
+            string expResult = StringResources.INVALID_PASSWORD_MESSAGE;
+            Assert.That(actResult, Is.EqualTo(expResult));
+            driver.Quit();
 
         }
 
         private AndroidElement GetWebElement(string webElement)
         {
-            By enterbutton = By.ClassName(webElement);
+            By enterButton = By.ClassName(webElement);
 
-            return driver.FindElement(enterbutton);
+            return driver.FindElement(enterButton);
         }
 
         private AndroidElement GetWebElementusingxpath(string webElement)
         {
-            By enterbutton = By.XPath(webElement);
+            By enterButton = By.XPath(webElement);
 
-            return driver.FindElement(enterbutton);
+            return driver.FindElement(enterButton);
         }
+
     }
 }
