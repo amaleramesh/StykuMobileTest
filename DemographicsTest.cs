@@ -11,8 +11,9 @@ namespace StykuMobileTest
         {
             AppiumSetup();
         }
+
         [Test]
-        public void DemographicsForNewProfileTest() 
+        public void DemographicsProfileTest() 
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
