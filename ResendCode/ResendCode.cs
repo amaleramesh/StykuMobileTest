@@ -1,21 +1,19 @@
-﻿using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Appium.MultiTouch;
 
 namespace StykuMobileTest
 {
-    public class SignInTest : Caps
+    public class ResendCode : Caps
     {
-        
-       [SetUp]
+        [SetUp]
         public void Setup()
         {
             AppiumSetup();
         }
 
         [Test]
-        public void TestSignInNewUser()
+        public void  ResendEmailVerificationCode()
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             AndroidElement eButton = driver.FindElementByClassName("android.widget.Button");
@@ -29,10 +27,43 @@ namespace StykuMobileTest
             AndroidElement emailContinueButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Continue\"]");
             emailContinueButton.Click();
 
-            // Enter verification code field
+            AndroidElement resendEmailVerificationlink = driver.FindElementByAccessibilityId("Resend verification email");
+            resendEmailVerificationlink.Click();
+
             AndroidElement verificationCodeField = driver.FindElementByClassName("android.widget.EditText");
             verificationCodeField.Click();
-            string verificationcode = "660499";
+            string verificationcode = "080565";
+            verificationCodeField.SendKeys(verificationcode);
+            driver.HideKeyboard();
+
+            AndroidElement emailVerifyButton = driver.FindElementByAccessibilityId("Verify");
+            emailVerifyButton.Click();
+
+            AndroidElement welComeText = driver.FindElementByAccessibilityId("Welcome");
+            string actResult=welComeText.GetAttribute("content-desc");
+            string expResult = "Welcome";
+
+            Assert.That(actResult, Is.EqualTo(expResult));
+
+        }
+        [Test]
+        public void ResendPhoneVerificationCode() 
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            AndroidElement eButton = driver.FindElementByClassName("android.widget.Button");
+            eButton.Click();
+
+            AndroidElement emailInputBox = driver.FindElementByClassName("android.widget.EditText");
+            emailInputBox.Click();
+            emailInputBox.SendKeys(StringResources.EMAIL_ID);
+            driver.HideKeyboard();
+
+            AndroidElement emailContinueButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Continue\"]");
+            emailContinueButton.Click();
+
+            AndroidElement verificationCodeField = driver.FindElementByClassName("android.widget.EditText");
+            verificationCodeField.Click();
+            string verificationcode = "260379";
             verificationCodeField.SendKeys(verificationcode);
             driver.HideKeyboard();
 
@@ -68,10 +99,6 @@ namespace StykuMobileTest
             confirmPasswordField.SendKeys("Test@123");
             driver.HideKeyboard();
 
-            // Remember me button
-            AndroidElement toggleButton = driver.FindElementByClassName("android.widget.Switch");
-            toggleButton.Click();
-
             // Click on continue button
             AndroidElement passwordContinueButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Continue\"]");
             passwordContinueButton.Click();
@@ -91,7 +118,7 @@ namespace StykuMobileTest
             driver.HideKeyboard();
 
             // Select country
-            AndroidElement counrty = driver.FindElementByAccessibilityId("🇮🇳 +91India");
+            AndroidElement counrty = driver.FindElementByClassName("android.view.View");
             counrty.Click();
 
             // Enter mobile number
@@ -104,40 +131,24 @@ namespace StykuMobileTest
             AndroidElement phoneVerifyButton = driver.FindElementByAccessibilityId("Verify");
             phoneVerifyButton.Click();
 
+            AndroidElement resendButton=driver.FindElementByAccessibilityId("Resend");
+            resendButton.Click();
+
             // Enter OTP
             AndroidElement verificationCodeTextfield = driver.FindElement(By.ClassName("android.widget.EditText"));
-            bool isEnabledotp = verificationCodeTextfield.Enabled;
-            Console.WriteLine($"Is the element enabled? {isEnabledotp}");
             verificationCodeTextfield.Click();
-            new Actions(driver).SendKeys("1180").Perform();
+            new Actions(driver).SendKeys("0911").Perform();
             driver.HideKeyboard();
 
             // Click on Verify button
             AndroidElement phoneNumberVerifyButton = driver.FindElement(By.XPath("//android.widget.Button[@content-desc=\"Verify\"]\r\n"));
             phoneNumberVerifyButton.Click();
 
-            // Scroll down
-            AndroidElement element = driver.FindElement(By.XPath("//android.widget.Button[@index='1']"));
-            TouchAction touchAction = new TouchAction(driver);
-            touchAction.Tap(element).Perform();
-            ScrollDown();
-
-            // Click on accept button
-            AndroidElement acceptButton = driver.FindElement(By.XPath("//android.widget.Button[@content-desc=\"Accept\"]"));
-            acceptButton.Click();
+            AndroidElement infoStyku =driver.FindElementByAccessibilityId("info@styku.com");
+            String actualResult=infoStyku.GetAttribute("content-desc");
+            String expectedResult = "info@styku.com";
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
 
         }
-
-        private void ScrollDown()
-        {
-            TouchAction touchAction = new TouchAction(driver);
-            int startX = driver.Manage().Window.Size.Width / 2;
-            int startY = (int)(driver.Manage().Window.Size.Height * 0.8);
-            int endY = (int)(driver.Manage().Window.Size.Height * - 9);
-            touchAction.Press(startX, startY).Wait(2000).MoveTo(startX, endY).Release().Perform();
-
-        }
-
     }
 }
-
