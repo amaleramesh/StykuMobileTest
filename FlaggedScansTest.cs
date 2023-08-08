@@ -1,13 +1,14 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.MultiTouch;
+using StykuMobileTest.Comman;
 
 namespace StykuMobileTest
 {
     public class FlaggedScansTest : Caps
     {
-        
-        string expText = "Dashboard";
+
+        public readonly string DASHBOARD = "Dashboard";
 
         [SetUp]
         public void Setup()
@@ -18,7 +19,9 @@ namespace StykuMobileTest
         [Test]
         public void KeepScan()
         {
-            FlagScanCommonCode();
+            LoginTest();
+
+            ReviewScans();
 
             AndroidElement keepScanButton = driver.FindElementByAccessibilityId("Keep Scan");
             keepScanButton.Click();
@@ -29,7 +32,9 @@ namespace StykuMobileTest
         [Test]
         public void RemoveScan()
         {
-            FlagScanCommonCode();
+            LoginTest();
+
+            ReviewScans();
 
             AndroidElement removeScanButton = driver.FindElementByAccessibilityId("Remove Scan");
             removeScanButton.Click();
@@ -50,7 +55,9 @@ namespace StykuMobileTest
         [Test]
         public void MultipleFlagScan()
         {
-            FlagScanCommonCode();
+            LoginTest();
+
+            ReviewScans();
 
             AndroidElement keepScanButton = driver.FindElementByAccessibilityId("Keep Scan");
             keepScanButton.Click();
@@ -62,15 +69,15 @@ namespace StykuMobileTest
                 try
                 {
                     AndroidElement dashBoardText = driver.FindElementByAccessibilityId("Dashboard");
-                    
-                    string actText = dashBoardText.GetAttribute("content-desc");
-                    
-                    if (string.Equals(expText, actText))
+
+                    string dashboardAttribute = dashBoardText.GetAttribute("content-desc");
+
+                    if (string.Equals(DASHBOARD, dashboardAttribute))
                     {
                         break;
                     }
-                    
-                    Assert.That(actText, Is.EqualTo(expText));
+
+                    Assert.That(dashboardAttribute, Is.EqualTo(DASHBOARD));
                 }
                 catch (NoSuchElementException e)
                 {
@@ -79,34 +86,12 @@ namespace StykuMobileTest
                     TouchAction(542, 1196);
                 }
             }
-
         }
 
-        public void FlagScanCommonCode()
+        // This method is used to the get elements likes skip, review now and predicated value. 
+        private void ReviewScans()
         {
-
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-            AndroidElement eButton = driver.FindElementByClassName("android.widget.Button");
-            eButton.Click();
-
-            AndroidElement emailInputBox = driver.FindElementByClassName("android.widget.EditText");
-            emailInputBox.Click();
-            emailInputBox.SendKeys(StringResources.EMAIL_ID);
-            driver.HideKeyboard();
-
-            AndroidElement continueButton = driver.FindElementByAccessibilityId("Continue");
-            continueButton.Click();
-
-            AndroidElement passwordInputBox = driver.FindElementByClassName("android.widget.EditText");
-            passwordInputBox.Click();
-            passwordInputBox.SendKeys(StringResources.PASSWORD);
-            driver.HideKeyboard();
-
-            AndroidElement passwordContinueButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Continue\"]");
-            passwordContinueButton.Click();
-
-            AndroidElement skipButton = driver.FindElementByAccessibilityId("Skip");
+            AndroidElement skipButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Skip\"]");
             skipButton.Click();
 
             AndroidElement reviewNowButton = driver.FindElementByAccessibilityId("Review Now");
@@ -116,14 +101,12 @@ namespace StykuMobileTest
             predicatedValueButton.Click();
 
             TouchAction(960, 746);
-
         }
 
-        public void TouchAction(int xCoordinate, int yCoordinate)
+        private void TouchAction(int xCoordinate, int yCoordinate)
         {
             var touchAction = new TouchAction(driver);
             touchAction.Press(x: xCoordinate, y: yCoordinate).Release().Perform();
         }
-
     }
 }

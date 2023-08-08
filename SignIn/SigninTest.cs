@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Appium.MultiTouch;
+using StykuMobileTest.Comman;
 
 namespace StykuMobileTest
 {
