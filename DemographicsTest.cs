@@ -14,13 +14,13 @@ namespace StykuMobileTest
         }
 
         [Test]
-        public void DemographicsProfileTest() 
+        public void DemographicsProfileTest()
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
             AndroidElement eButton = driver.FindElementByClassName("android.widget.Button");
             eButton.Click();
-            
+
             AndroidElement emailInputBox = driver.FindElementByClassName("android.widget.EditText");
             emailInputBox.Click();
             emailInputBox.SendKeys(StringResources.EMAIL_ID);
@@ -40,8 +40,14 @@ namespace StykuMobileTest
             AndroidElement passwordContinueButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Continue\"]");
             passwordContinueButton.Click();
 
-            AndroidElement demographicsContinueButton =driver.FindElementByAccessibilityId("Continue");
-            demographicsContinueButton.Click();
+            AndroidElement ProfileInformationContinueButton = driver.FindElementByAccessibilityId("Continue");
+            ProfileInformationContinueButton.Click();
+
+            AndroidElement metricButton = driver.FindElementByAccessibilityId("Metric");
+            metricButton.Click();
+
+            AndroidElement UnitSystemContinueButton = driver.FindElementByAccessibilityId("Continue");
+            UnitSystemContinueButton.Click();
 
             // Select date of date of birth
             SelectMonth();
@@ -50,12 +56,6 @@ namespace StykuMobileTest
 
             AndroidElement birthdayContinueButton = driver.FindElementByAccessibilityId("Continue");
             birthdayContinueButton.Click();
-
-            AndroidElement metricButton =driver.FindElementByAccessibilityId("Metric");
-            metricButton.Click();
-
-            AndroidElement unitSystemContinueButton = driver.FindElementByAccessibilityId("Continue");
-            unitSystemContinueButton.Click();
 
             // Select height
             SelectHeight();
@@ -74,7 +74,6 @@ namespace StykuMobileTest
             }
             catch (NoSuchElementException e)
             {
-                // Handle the exception gracefully (e.g., logging, print error message, etc.)
                 Console.WriteLine($"Element not found: {e.Message}");
             }
 
@@ -93,10 +92,14 @@ namespace StykuMobileTest
             // continue button
             genderContinueButton.Click();
 
-            // Click on skip button
-            AndroidElement skipButton = driver.FindElementByAccessibilityId("Skip");
-            skipButton.Click();
+            // Click on Country
+            AndroidElement SelectCountry = driver.FindElementByAccessibilityId("Afghanistan");
+            SelectCountry.Click();
+            driver.HideKeyboard();
 
+            // Click on Country Continue button
+            AndroidElement CountryContinueButton = driver.FindElementByAccessibilityId("Continue");
+            CountryContinueButton.Click();
         }
         public void SelectMonth()
         {
@@ -106,19 +109,19 @@ namespace StykuMobileTest
                 AndroidElement monthElement = androidElements.ElementAt(0);
                 string elementText = monthElement.GetAttribute("content-desc");
 
-                if (elementText == "June" )
+                if (elementText == "May")
                 {
                     break;
                 }
                 else
                 {
                     TouchAction touchAction = new TouchAction(driver);
-                    touchAction.Press(177, 680).MoveTo(177, 773).Release().Perform();
+                    touchAction.Press(281, 936).MoveTo(281, 1069).Release().Perform();
                 }
-            }      
+            }
 
         }
-        private void SelectDate() 
+        private void SelectDate()
         {
             try
             {
@@ -135,7 +138,7 @@ namespace StykuMobileTest
                     else
                     {
                         TouchAction touchAction = new TouchAction(driver);
-                        touchAction.Press(419, 682).MoveTo(686, 775).Release().Perform();
+                        touchAction.Press(626, 943).MoveTo(619, 1066).Release().Perform();
                     }
                 }
             }
@@ -147,7 +150,7 @@ namespace StykuMobileTest
         }
         public void SelectYear()
         {
-            try 
+            try
             {
                 for (int i = 0; i <= 3; i++)
                 {
@@ -155,14 +158,14 @@ namespace StykuMobileTest
                     AndroidElement yearElement = androidElements.ElementAt(2);
                     string elementText = yearElement.GetAttribute("content-desc");
 
-                    if (elementText == "2000")
+                    if (elementText == "2015")
                     {
                         break;
                     }
                     else
                     {
                         TouchAction touchAction = new TouchAction(driver);
-                        touchAction.Press(552, 682).MoveTo(542, 777).Release().Perform();
+                        touchAction.Press(781, 946).MoveTo(788, 1062).Release().Perform();
                     }
                 }
             }
@@ -171,7 +174,7 @@ namespace StykuMobileTest
                 Console.WriteLine($"Element not found: {e.Message}");
             }
         }
-        private void SelectHeight() 
+        private void SelectHeight()
         {
             try
             {
@@ -187,7 +190,7 @@ namespace StykuMobileTest
                     else
                     {
                         TouchAction touchAction = new(driver);
-                        touchAction.Press(328, 726).MoveTo(332, 639).Release().Perform();
+                        touchAction.Press(510, 989).MoveTo(514, 1112).Release().Perform();
                     }
                 }
             }
@@ -197,7 +200,7 @@ namespace StykuMobileTest
                 Console.WriteLine($"Element not found: {e.Message}");
             }
         }
-        private void SelectWeight() 
+        private void SelectWeight()
         {
             try
             {
@@ -206,14 +209,14 @@ namespace StykuMobileTest
                     AndroidElement weightElement = driver.FindElementByClassName("android.widget.SeekBar");
                     string elementText = weightElement.GetAttribute("content-desc");
 
-                    if (elementText == "63")
+                    if (elementText == "58")
                     {
                         break;
                     }
                     else
                     {
                         TouchAction touchAction = new(driver);
-                        touchAction.Press(340, 813).MoveTo(340, 726).Release().Perform();
+                        touchAction.Press(528, 1010).MoveTo(528, 1122).Release().Perform();
                     }
                 }
             }
