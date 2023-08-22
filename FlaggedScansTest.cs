@@ -27,6 +27,7 @@ namespace StykuMobileTest
             keepScanButton.Click();
 
             TouchAction(542, 1196);
+
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace StykuMobileTest
             AndroidElement confirmRemoveScanButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Remove Scan\"]");
             confirmRemoveScanButton.Click();
 
-            AndroidElement iWasWearingClothesButton = driver.FindElementByAccessibilityId("I was wearing clothes");
+            AndroidElement iWasWearingClothesButton = driver.FindElementByAccessibilityId("I was wearing loose clothes");
             iWasWearingClothesButton.Click();
 
             AndroidElement scanWasDistortedButton = driver.FindElementByAccessibilityId("Scan was distorted");
@@ -90,17 +91,14 @@ namespace StykuMobileTest
 
         // This method is used to the get elements likes skip, review now and predicated value. 
         private void ReviewScans()
-        {
-            AndroidElement skipButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Skip\"]");
-            skipButton.Click();
-
+        {      
             AndroidElement reviewNowButton = driver.FindElementByAccessibilityId("Review Now");
             reviewNowButton.Click();
 
             AndroidElement predicatedValueButton = driver.FindElementByAccessibilityId("Predicted Value");
             predicatedValueButton.Click();
 
-            TouchAction(960, 746);
+            TouchAction(957, 813);
         }
 
         private void TouchAction(int xCoordinate, int yCoordinate)

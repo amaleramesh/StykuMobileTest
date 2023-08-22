@@ -18,8 +18,8 @@ namespace StykuMobileTest
         {
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-            AndroidElement eButton = driver.FindElementByClassName("android.widget.Button");
-            eButton.Click();
+            AndroidElement enterButton = driver.FindElementByClassName("android.widget.Button");
+            enterButton.Click();
 
             AndroidElement emailInputBox = driver.FindElementByClassName("android.widget.EditText");
             emailInputBox.Click();
