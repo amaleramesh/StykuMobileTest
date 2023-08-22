@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium.Appium.Android;
+using StykuMobileTest.Comman;
 
 namespace StykuMobileTest
 {
@@ -70,6 +71,7 @@ namespace StykuMobileTest
             Assert.That(actResult, Is.EqualTo(eResult));
 
         }
+
         [Test]
         public void ForgotPasswordInvalidVerificationCode() {
             

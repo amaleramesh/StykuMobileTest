@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium.Android;
+using StykuMobileTest.Comman;
 
 namespace StykuMobileTest
 {
@@ -15,41 +16,7 @@ namespace StykuMobileTest
         [Test]
         public void TestLoginSuccess()
         {
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-
-            // Enter button on homepage
-            AndroidElement eButton = GetWebElement("android.widget.Button");
-            eButton.Click();
-
-            // Enter email Id on welcome button
-            AndroidElement emailInputBox = GetWebElement("android.widget.EditText");
-            emailInputBox.Click();
-            emailInputBox.SendKeys(StringResources.EMAIL_ID);
-            driver.HideKeyboard();
-
-            // Click on email continue button
-            By emailContinueButton = By.XPath("//android.widget.Button[@content-desc=\"Continue\"]");
-            AndroidElement cbutton = driver.FindElement(emailContinueButton);
-            cbutton.Click();
-
-            // Enter password
-            AndroidElement passwordInputBox = GetWebElement("android.widget.EditText");
-            passwordInputBox.Click();
-            passwordInputBox.SendKeys(StringResources.PASSWORD);
-            driver.HideKeyboard();
-
-            // Click on toggle button
-            AndroidElement toogleButton = GetWebElementusingxpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.widget.Switch");
-            toogleButton.Click();
-
-            // Click on password continue button
-            AndroidElement passwordButton = GetWebElementusingxpath("//android.widget.Button[@content-desc=\"Continue\"]");
-            passwordButton.Click();
-
-            // Click on skip button
-            AndroidElement sButton = GetWebElementusingxpath("//android.widget.Button[@content-desc=\"Skip\"]");
-            sButton.Click();
-
+            LoginTest();
         }
 
         [Test]
