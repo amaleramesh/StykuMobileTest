@@ -1,11 +1,13 @@
-﻿using OpenQA.Selenium.Appium.Android;
+﻿// Ignore Spelling: Styku
+
+using OpenQA.Selenium.Appium.Android;
 using StykuMobileTest.Comman;
 
 namespace StykuMobileTest
 {
     public class ForgotPasswordTest : Caps
     {
-       
+
         [SetUp]
         public void Setup()
         {
@@ -32,13 +34,13 @@ namespace StykuMobileTest
             emailContinueButton.Click();
 
             // Click on forgot password link
-            AndroidElement forgotPassword = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Forgot password\"]");
+            AndroidElement forgotPassword = driver.FindElementByAccessibilityId("Forgot Password");
             forgotPassword.Click();
 
             // Enter verification code field
             AndroidElement verificationCodeField = driver.FindElementByClassName("android.widget.EditText");
             verificationCodeField.Click();
-            string verificationcode = "311889";
+            string verificationcode = "062981";
             verificationCodeField.SendKeys(verificationcode);
 
             // Click on email verification continue button
@@ -73,8 +75,9 @@ namespace StykuMobileTest
         }
 
         [Test]
-        public void ForgotPasswordInvalidVerificationCode() {
-            
+        public void ForgotPasswordInvalidVerificationCode()
+        {
+
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
             // Enter button on homepage
@@ -82,7 +85,7 @@ namespace StykuMobileTest
             enterButton.Click();
 
             // Enter email Id on welcome button
-            AndroidElement emailInputBox =driver.FindElementByClassName("android.widget.EditText");
+            AndroidElement emailInputBox = driver.FindElementByClassName("android.widget.EditText");
             emailInputBox.Click();
             emailInputBox.SendKeys(StringResources.EMAIL_ID);
             driver.HideKeyboard();
@@ -90,9 +93,9 @@ namespace StykuMobileTest
             // Click on email continue button
             AndroidElement emailContinueButton = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Continue\"]");
             emailContinueButton.Click();
-         
+
             // Click on forgot password link
-            AndroidElement forgotPassword = driver.FindElementByXPath("//android.widget.Button[@content-desc=\"Forgot password\"]");
+            AndroidElement forgotPassword = driver.FindElementByAccessibilityId("Forgot Password");
             forgotPassword.Click();
 
             // Enter verification code field
@@ -106,11 +109,11 @@ namespace StykuMobileTest
             vContinueButton.Click();
 
             // Get the value of the content-desc attribute
-            AndroidElement element = driver.FindElementByXPath("//android.view.View[@content-desc=\"Incorrect Verification Code\"]");
-            string actResult = element.GetAttribute("text");
+            AndroidElement element = driver.FindElementByAccessibilityId("Incorrect Code");
+            string actResult = element.GetAttribute("content-desc");
             string expResult = StringResources.EMAIL_VERIFICATION_VALIDATION_CODE;
             Assert.That(actResult, Is.EqualTo(expResult));
 
-        }  
+        }
     }
 }
